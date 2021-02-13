@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import { View, TextInput, Image, Button } from 'react-native'
 
 import firebase from 'firebase'
-import { NavigationHelpersContext } from '@react-navigation/native'
 require('firebase/firestore')
 require('firebase/firebase-storage')
 

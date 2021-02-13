@@ -13,7 +13,6 @@ function Profile(props) {
 
     useEffect(() => {
         const { currentUser, posts } = props
-        console.log('FROM PROFILE: ', { currentUser, posts })
 
         if (props.route.params.uid === firebase.auth().currentUser.uid) {
             setUser(currentUser)
@@ -45,38 +44,39 @@ function Profile(props) {
                             id, ...data
                         }
                     })
-                    console.log('HERE POSTS', posts)
                     setUserPosts(posts)
                 })
         }
 
-        if(props.following.indexOf(props.route.params.uid) > -1) {
+        if (props.following.indexOf(props.route.params.uid) > -1) {
             setFollowing(true)
         } else {
             setFollowing(false)
         }
-                    
+
     }, [props.route.params.uid, props.following])
 
     const onFollow = () => {
         firebase.firestore()
-        .collection('following')
-        .doc(firebase.auth().currentUser.uid)
-        .collection('userFollowing')
-        .doc(props.route.params.uid)
-        .set({})
+            .collection('following')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('userFollowing')
+            .doc(props.route.params.uid)
+            .set({})
     }
 
     const onUnFollow = () => {
         firebase.firestore()
-        .collection('following')
-        .doc(firebase.auth().currentUser.uid)
-        .collection('userFollowing')
-        .doc(props.route.params.uid)
-        .delete()
+            .collection('following')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('userFollowing')
+            .doc(props.route.params.uid)
+            .delete()
     }
 
-    
+    const onLogout = () => {
+        firebase.auth().signOut()
+    }
 
     if (user === null) {
         return <View />
@@ -89,21 +89,27 @@ function Profile(props) {
             <Text style={styles.containerInfo}>
                 {user.email}
             </Text>
-            {props.route.params.uid !== firebase.auth().currentUser.uid && (
+            {props.route.params.uid !== firebase.auth().currentUser.uid ? (
                 <View>
                     {following ? (
-                        <Button 
+                        <Button
                             title='Following'
                             onPress={() => onUnFollow()}
                         />
                     ) : (
-                        <Button 
-                            title='Follow'
-                            onPress={() => onFollow()}
-                        />
-                    )}
+                            <Button
+                                title='Follow'
+                                onPress={() => onFollow()}
+                            />
+                        )}
                 </View>
-            ) }
+            ) : (
+                <Button
+                    title='Logout'
+                    onPress={() => onLogout()}
+                />
+                )
+            }
             <View style={styles.containerGallery}>
                 <FlatList
                     numColumns={3}

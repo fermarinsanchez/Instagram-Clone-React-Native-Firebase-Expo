@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 
 import firebase from 'firebase'
-import { useLinkProps } from '@react-navigation/native'
 require('firebase/firestore')
 
 export default function Search(props) {

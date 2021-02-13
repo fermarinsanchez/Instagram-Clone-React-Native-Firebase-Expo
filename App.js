@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LandingScreen from './Components/auth/Landing'
 import RegisterScreen from './Components/auth/Register'
+import LoginScreen from './Components/auth/Login'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import rootReducer from './redux/reducers'
@@ -12,6 +13,7 @@ import thunk from 'redux-thunk'
 import MainScreen from './Components/Main'
 import AddScreen from  './Components/Main/Add'
 import SaveScreen from './Components/Main/Save'
+import CommentScreen from './Components/Main/Comment'
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
@@ -75,6 +77,7 @@ export default function App({navigation}) {
         <Stack.Navigator initialRouteName='Landing'>
           <Stack.Screen name='Landing' component={LandingScreen} options={{ headerShown: false }} />
           <Stack.Screen name='Register' component={RegisterScreen} />
+          <Stack.Screen name='Login' component={LoginScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -87,6 +90,7 @@ export default function App({navigation}) {
           <Stack.Screen name='Main' component={MainScreen} />
           <Stack.Screen name='Add' component={AddScreen} navigation={navigation}/>
           <Stack.Screen name='Save' component={SaveScreen} navigation={navigation}/>
+          <Stack.Screen name='Comment' component={CommentScreen} navigation={navigation} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
